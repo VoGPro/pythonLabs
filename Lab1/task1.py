@@ -27,3 +27,13 @@ def sumOfNotPrimeDivs(num):
                     sum += num / i
         i += 1
     return int(sum)
+
+
+# Функция 2. Найти количество цифр числа, меньших 3.
+def amountOf3(num):
+    amount = 0
+    while (num != 0):
+        if (num % 10 < 3):
+            amount += 1
+        num //= 10
+    return amount
