@@ -16,4 +16,19 @@ def shuffleSymbs(sntc):
     newSntc += words[-1]
     return newSntc
 
-print(shuffleSymbs(sentence))
+
+# 12. Дана строка в которой содержаться цифры и буквы. Необходимо
+# расположить все цифры в начале строки, а буквы - в конце.
+
+s = "ab51jk2n0fw3"
+
+def separateNumsAbc(str):
+    nums = ''
+    abc = ''
+    for char in str:
+        if char.isalpha():
+            abc += char
+        elif char.isnumeric():
+            nums += char
+    newStr = nums + abc
+    return newStr
