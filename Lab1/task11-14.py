@@ -3,16 +3,15 @@
 # частотой наиболее часто встречаемого символа в строке и
 # частотой его появления в алфавите.
 
+def symbolsFreq(s):
+    all_freq = {}
+    for i in s:
+        if i in all_freq:
+            all_freq[i] += 1
+        else:
+            all_freq[i] = 1
+    return all_freq
 def sortByFreq(args):
-    def symbolsFreq(s):
-        all_freq = {}
-        for i in s:
-            if i in all_freq:
-                all_freq[i] += 1
-            else:
-                all_freq[i] = 1
-        return all_freq
-
     defaultStrings = []
     allStr = ''
     mcSymbs4Strings = [] # наиболее встречаемый символ и его частота для каждой строки
@@ -119,7 +118,7 @@ def sortByMed(strings):
 # средним весом ASCII-кода символа в строке и максимально среднего ASCII-кода
 # тройки подряд идущих символов в строке.
 
-def sortBySqrtDev(strings):
+def sortBySqrtDevOfWeigth(strings):
     def SqrtDev(s):
         avgWeigth = sum(ord(c) for c in s) / len(s)
         maxAvg3 = 0
@@ -130,6 +129,48 @@ def sortBySqrtDev(strings):
     strings.sort(key=SqrtDev)
     return strings
 
-s8 = ["zlrmdi", "sktx", "qcdfnda", "oewms"]
-print(s8)
-print(sortBySqrtDev(s8))
+# s8 = ["zlrmdi", "sktx", "qcdfnda", "oewms"]
+# print(s8)
+# print(sortBySqrtDevOfWeigth(s8))
+
+
+# 12. Отсортировать строки в порядке увеличения квадратичного отклонения
+# частоты встречаемости самого распространённого символа в наборе строк
+# от частоты его встречаемости в данной строке.
+
+def sortBySqrtDevOfFreq(args):
+    defaultStrings = []
+    allStr = ''
+    mcSymbs4Strings = []
+    for st in args:
+        defaultStrings.append([st])
+        st = st.replace(' ', '')
+        allStr += st
+        stFreq = symbolsFreq(st)
+        key_symbol = max(stFreq, key=stFreq.get)
+        var_num = stFreq.get(key_symbol)
+        symb_n_freq = [key_symbol, var_num]
+        mcSymbs4Strings.append(symb_n_freq)
+
+    textFreq = symbolsFreq(allStr)
+
+    for i in range(0, len(defaultStrings)):
+        defaultStrings[i].append((textFreq.get(mcSymbs4Strings[i][0]) - mcSymbs4Strings[i][1])**2)
+
+    defaultStrings.sort(key=lambda x: x[1])
+
+    result = []
+    for defStr in defaultStrings:
+        result.append(defStr[0])
+
+    return result
+
+print()
+for string in ts:
+    print(string)
+print()
+
+newS3 = sortByFreq(ts)
+
+for string in newS3:
+    print(string)
