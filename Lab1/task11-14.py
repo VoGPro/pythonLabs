@@ -97,11 +97,11 @@ def sortByMed(strings):
 
     medWithStrings.sort(key=lambda x: x[0])
 
-    for x in medWithStrings:
-        print(f'\n{x[0]}')
-        for i in range(1, len(x)):
-            print(x[i])
-    print()
+    # for x in medWithStrings:
+    #     print(f'\n{x[0]}')
+    #     for i in range(1, len(x)):
+    #         print(x[i])
+    # print()
 
     stringsByMed = []
     for x in medWithStrings:
@@ -110,6 +110,26 @@ def sortByMed(strings):
 
     return stringsByMed
 
-stringsByMed = sortByMed(ts)
-for string in stringsByMed:
-    print(string)
+# stringsByMed = sortByMed(ts)
+# for string in stringsByMed:
+#     print(string)
+
+
+# 8. Отсортировать строки в порядке увеличения квадратичного отклонения между
+# средним весом ASCII-кода символа в строке и максимально среднего ASCII-кода
+# тройки подряд идущих символов в строке.
+
+def sortBySqrtDev(strings):
+    def SqrtDev(s):
+        avgWeigth = sum(ord(c) for c in s) / len(s)
+        maxAvg3 = 0
+        for i in range(len(s) - 2):
+            avg = (ord(s[i]) + ord(s[i + 1]) + ord(s[i + 2])) / 3
+            maxAvg3 = max(maxAvg3, avg)
+        return (avgWeigth - maxAvg3) ** 2
+    strings.sort(key=SqrtDev)
+    return strings
+
+s8 = ["zlrmdi", "sktx", "qcdfnda", "oewms"]
+print(s8)
+print(sortBySqrtDev(s8))
