@@ -62,10 +62,25 @@ def isLocalMaxima(index, arr):
 
     return index in mx
 
-arr30 = [618, 107, 257, 324, 86, 432, 530]
-print(f"\n{arr30}")
-for i in range(len(arr30)):
-    if isLocalMaxima(i, arr30):
-        print(f"{arr30[i]} - локальный максимум")
-    else:
-        print(f"{arr30[i]} - не локальный максимум")
+arr = [298, 107, 257, 324, 86, 432, 530]
+# print(f"\n{arr}")
+# for i in range(len(arr)):
+#     if isLocalMaxima(i, arr):
+#         print(f"{arr[i]} - локальный максимум")
+#     else:
+#         print(f"{arr[i]} - не локальный максимум")
+
+
+# 42. Дан целочисленный массив. Найти все элементы, которые
+# меньше среднего арифметического элементов массива.
+
+def lessThanAvg(arr):
+    avg = sum(arr) / len(arr)
+    result = []
+    for num in arr:
+        if num < avg:
+            result.append(num)
+    return result
+
+print(f"\n{arr}")
+print(f"Меньше среднего арифметического: {lessThanAvg(arr)}")
