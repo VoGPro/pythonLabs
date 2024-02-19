@@ -67,16 +67,6 @@ ts = ["The United States of America (USA or U.S.A.) is a country primarily locat
       "Germany, officially the Federal Republic of Germany, is a country in the western region of Central Europe. It is the second-most populous country in Europe after Russia.",
       "Italy (Italian: Italia, Italian: [iˈtaːlja]), officially the Italian Republic, is a country in Southern and Western Europe. Located in the middle of the Mediterranean Sea."]
 
-# print()
-# for string in ts:
-#     print(string)
-# print()
-#
-# newS3 = sortByFreq(ts)
-#
-# for string in newS3:
-#     print(string)
-
 
 # 6. Отсортировать строки в порядке увеличения медианного значения выборки строк (прошлое
 # медианное значение удаляется из выборки и производится поиск нового медианного значения).
@@ -109,10 +99,6 @@ def sortByMed(strings):
 
     return stringsByMed
 
-# stringsByMed = sortByMed(ts)
-# for string in stringsByMed:
-#     print(string)
-
 
 # 8. Отсортировать строки в порядке увеличения квадратичного отклонения между
 # средним весом ASCII-кода символа в строке и максимально среднего ASCII-кода
@@ -129,9 +115,7 @@ def sortBySqrtDevOfWeigth(strings):
     strings.sort(key=SqrtDev)
     return strings
 
-# s8 = ["zlrmdi", "sktx", "qcdfnda", "oewms"]
-# print(s8)
-# print(sortBySqrtDevOfWeigth(s8))
+s8 = ["zlrmdi", "sktx", "qcdfnda", "oewms", "sjfnm"]
 
 
 # 12. Отсортировать строки в порядке увеличения квадратичного отклонения
@@ -165,12 +149,61 @@ def sortBySqrtDevOfFreq(args):
 
     return result
 
-print()
-for string in ts:
-    print(string)
-print()
 
-newS3 = sortByFreq(ts)
+def solveTask():
+    pr = ("\n3. Отсортировать строки в порядке увеличения разницы между\n"
+          "частотой наиболее часто встречаемого символа в строке и\n"
+          "частотой его появления в алфавите.\n\n"
+          "6. Отсортировать строки в порядке увеличения медианного значения выборки строк (прошлое\n"
+          "медианное значение удаляется из выборки и производится поиск нового медианного значения).\n\n"
+          "8. Отсортировать строки в порядке увеличения квадратичного отклонения между\n"
+          "средним весом ASCII-кода символа в строке и максимально среднего ASCII-кода\n"
+          "тройки подряд идущих символов в строке.\n\n"
+          "12. Отсортировать строки в порядке увеличения квадратичного отклонения\n"
+          "частоты встречаемости самого распространённого символа в наборе строк\n"
+          "от частоты его встречаемости в данной строке.\n\n"
+          "Чтобы решить задачу 3 - введите 3.\n"
+          "Чтобы решить задачу 6 - введите 6.\n"
+          "Чтобы решить задачу 8 - введите 8.\n"
+          "Чтобы решить задачу 12 - введите 12.")
+    print(pr)
 
-for string in newS3:
-    print(string)
+    task = ''
+    while not (task == '3' or task == '6' or task == '8' or task == '12'):
+        task = input("Ввод: ")
+
+    if task == '3':
+        print("\nСтроки до сортировки:")
+        for string in ts:
+            print(string)
+        print("\nСтроки после сортировки:")
+        newS3 = sortByFreq(ts)
+        for string in newS3:
+            print(string)
+    elif task == '6':
+        print("\nСтроки до сортировки:")
+        for string in ts:
+            print(string)
+        print("\nСтроки после сортировки:")
+        newS6 = sortByMed(ts)
+        for string in newS6:
+            print(string)
+    elif task == '8':
+        print(f"\nСтроки до сортировки:\n{s8}")
+        print(f"\nСтроки после сортировки:\n{sortBySqrtDevOfWeigth(s8)}")
+    else:
+        print("\nСтроки до сортировки:")
+        for string in ts:
+            print(string)
+        print("\nСтроки после сортировки:")
+        newS12 = sortBySqrtDevOfFreq(ts)
+        for string in newS12:
+            print(string)
+
+    yn = input("\nРешить ещё задачу? (да/нет): ")
+
+    if yn.lower() == "да":
+        solveTask()
+
+
+solveTask()
