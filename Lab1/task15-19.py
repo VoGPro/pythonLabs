@@ -62,13 +62,13 @@ def isLocalMaxima(index, arr):
 
     return index in mx
 
-arr = [298, 107, 257, 324, 86, 432, 530]
-# print(f"\n{arr}")
-# for i in range(len(arr)):
-#     if isLocalMaxima(i, arr):
-#         print(f"{arr[i]} - локальный максимум")
+a3042 = [298, 107, 257, 324, 86, 432, 530]
+# print(f"\n{a3042}")
+# for i in range(len(a3042)):
+#     if isLocalMaxima(i, a3042):
+#         print(f"{a3042[i]} - локальный максимум")
 #     else:
-#         print(f"{arr[i]} - не локальный максимум")
+#         print(f"{a3042[i]} - не локальный максимум")
 
 
 # 42. Дан целочисленный массив. Найти все элементы, которые
@@ -82,5 +82,24 @@ def lessThanAvg(arr):
             result.append(num)
     return result
 
-print(f"\n{arr}")
-print(f"Меньше среднего арифметического: {lessThanAvg(arr)}")
+# print(f"\n{a3042}")
+# print(f"Меньше среднего арифметического: {lessThanAvg(a3042)}")
+
+
+# 54. Для введённого списка построить список из элементов,
+# встречающихся в исходном более трёх раз.
+
+def amountMoreThan3(arr):
+    unique = list(set(arr))
+    amounts = []
+    moreThan3 = []
+    for x in unique:
+        amounts.append(arr.count(x))
+    for i in range(len(amounts)):
+        if amounts[i] > 3:
+            moreThan3.append(unique[i])
+    return moreThan3
+
+arr54 = ['x','s','x','r','e','y','x','p','e','y','w','t','u','n','x','s','t','t','r','e','r','t','s','u','e','w','t','p','s','u','n']
+print(f"\n{arr54}")
+print(f"Встречаются более трёх раз: {amountMoreThan3(arr54)}")
