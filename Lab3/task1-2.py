@@ -173,7 +173,7 @@ try:
     xTe2 = 10
     yTe2 = -12
     print(f"\nПередвинем четырёхугольник с id={tetragon2.id} на ({xTe2}, {yTe2}) значений по x и по y:")
-    tetragon2.move(xTe2, -yTe2)
+    tetragon2.move(xTe2, yTe2)
     print(tetragon2)
 
     print("\nСравним площади фигур:")
