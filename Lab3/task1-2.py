@@ -31,6 +31,12 @@ class Point:
     def y(self):
         return self.__y
 
+    def __str__(self):
+        return f"({self.__x}, {self.__y})"
+
+    def __eq__(self, other):
+        return self.__x == other.x and self.__y == other.y
+
     def distance(self, other):
         return math.sqrt((other.x - self.__x)**2 + (other.y - self.__y)**2)
 
@@ -39,18 +45,15 @@ class Triangle:
     __name = "треугольник"
 
     def __init__(self, a, b, c):
+        if a == b or b == c or a == c:
+            points = [a, b, c]
+            raise ShapeException(self.__name, points)
         self.__id = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
         self.__a = a
         self.__b = b
         self.__c = c
-        self.__area = self.__find_area()
-
-    def __find_area(self):
-        ab = self.__a.distance(self.__b)
-        bc = self.__b.distance(self.__c)
-        ac = self.__a.distance(self.__c)
-        semi_p = (ab + bc + ac) / 2
-        return round(math.sqrt(semi_p * (semi_p - ab) * (semi_p - bc) * (semi_p - ac)), 2)
+        self.__area = round(abs(self.__a.x * (self.__b.y - self.__c.y) + self.__b.x * (self.__c.y - self.__a.y)
+                                + self.__c.x * (self.__a.y - self.__b.y)) / 2, 2)
 
     @property
     def name(self):
@@ -80,9 +83,9 @@ class Triangle:
 
     def __str__(self):
         return (f"{self.name.capitalize()} (id={self.id})\n"
-                f"Точка A: ({self.__a.x}, {self.__a.y})\n"
-                f"Точка B: ({self.__b.x}, {self.__b.y})\n"
-                f"Точка C: ({self.__c.x}, {self.__c.y})\n"
+                f"Точка A: {self.__a}\n"
+                f"Точка B: {self.__b}\n"
+                f"Точка C: {self.__c}\n"
                 f"Площадь: {self.area}")
 
 
@@ -90,20 +93,18 @@ class Tetragon:
     __name = "четырёхугольник"
 
     def __init__(self, a, b, c, d):
+        if a == b or b == c or c == d or a == d or a == c or b == d:
+            points = [a, b, c, d]
+            raise ShapeException(self.__name, points)
         self.__id = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
         self.__a = a
         self.__b = b
         self.__c = c
         self.__d = d
-        self.__area = self.__find_area()
-
-    def __find_area(self):
-        ab = self.__a.distance(self.__b)
-        bc = self.__b.distance(self.__c)
-        cd = self.__c.distance(self.__d)
-        ad = self.__a.distance(self.__d)
-        semi_p = (ab + bc + cd + ad) / 2
-        return round(math.sqrt((semi_p - ab) * (semi_p - bc) * (semi_p - cd) * (semi_p - ad)), 2)
+        self.__area = abs(
+            round(((self.__a.x * self.__b.y + self.__b.x * self.__c.y + self.__c.x * self.__d.y + self.__d.x
+                    * self.__a.y) - (self.__b.x * self.__a.y + self.__c.x * self.__b.y + self.__d.x * self.__c.y
+                                     + self.__a.x * self.__d.y)) / 2, 2))
 
     @property
     def name(self):
@@ -134,33 +135,57 @@ class Tetragon:
 
     def __str__(self):
         return (f"{self.name.capitalize()} (id={self.id})\n"
-                f"Точка A: ({self.__a.x}, {self.__a.y})\n"
-                f"Точка B: ({self.__b.x}, {self.__b.y})\n"
-                f"Точка C: ({self.__c.x}, {self.__c.y})\n"
-                f"Точка D: ({self.__d.x}, {self.__d.y})\n"
+                f"Точка A: {self.__a}\n"
+                f"Точка B: {self.__b}\n"
+                f"Точка C: {self.__c}\n"
+                f"Точка D: {self.__d}\n"
                 f"Площадь: {self.area}")
 
 
-triangle1 = Triangle(Point(0, 0), Point(5, 3), Point(2, 6))
-triangle2 = Triangle(Point(-7, -9), Point(-10, -6), Point(-12, -12))
-tetragon1 = Tetragon(Point(3, 2), Point(5, 3), Point(6, 6), Point(2, 5))
-tetragon2 = Tetragon(Point(13, 22), Point(35, 23), Point(36, 57), Point(12, 54))
-print("\nСозданы следующие геометрические фигуры:\n")
-print(triangle1)
-print()
-print(triangle2)
-print()
-print(tetragon1)
-print()
-print(tetragon2)
+class ShapeException(Exception):
+    def __init__(self, name, points):
+        self.name = name
+        self.points = points
 
-xTe2 = 10
-yTe2 = -12
-print(f"\nПередвинем четырёхугольник с id={tetragon2.id} на ({xTe2}, {yTe2}) значений по x и по y:")
-tetragon2.move(xTe2, -yTe2)
-print(tetragon2)
+    def __str__(self):
+        msg = f"Ошибка: объект с координатами"
+        for p in self.points:
+            msg += f" {str(p)},"
+        msg = msg[:-1]
+        msg += f" не является {self.name}ом."
+        return msg
 
-print("\nСравним площади фигур:")
-tetragon2.compare(triangle1)
-tetragon1.compare(triangle1)
-triangle1.compare(triangle2)
+
+try:
+    triangle1 = Triangle(Point(0, 0), Point(5, 3), Point(2, 6))
+    triangle2 = Triangle(Point(-7, -9), Point(-10, -6), Point(-12, -12))
+    tetragon1 = Tetragon(Point(4.55, 13.3), Point(11.71, 11.32), Point(1.66, 7.2), Point(4.55, 3.49))
+    tetragon2 = Tetragon(Point(13, 22), Point(35, 23), Point(36, 57), Point(12, 54))
+    print("\nСозданы следующие геометрические фигуры:\n")
+    print(triangle1)
+    print()
+    print(triangle2)
+    print()
+    print(tetragon1)
+    print()
+    print(tetragon2)
+
+    xTe2 = 10
+    yTe2 = -12
+    print(f"\nПередвинем четырёхугольник с id={tetragon2.id} на ({xTe2}, {yTe2}) значений по x и по y:")
+    tetragon2.move(xTe2, -yTe2)
+    print(tetragon2)
+
+    print("\nСравним площади фигур:")
+    tetragon2.compare(triangle1)
+    tetragon1.compare(triangle1)
+    triangle1.compare(triangle2)
+
+    print("\nПопытаемся создать неправильные геометрические фигуры:")
+    triangle3 = Triangle(Point(-7, -9), Point(-7, -9), Point(-12, -12))
+    tetragon3 = Tetragon(Point(13, 22), Point(3, 3), Point(36, 57), Point(3, 3))
+    print(triangle3)
+    print()
+    print(tetragon3)
+except ShapeException as e:
+    print(e)
