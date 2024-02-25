@@ -21,17 +21,13 @@
 # В ответе укажите два числа: сначала искомое значение для файла А,
 # затем для файла B.
 
-def findMinSumOf3Nums(n, k, numbers):
-    min_sum = float('inf')
-    final_nums = []
+def findMinSumOf3Nums(n, k, nums):
+    min_sum1 = min_sum1_2 = min_sum1_2_3 = float('inf')
     for i in range(n - 2*k):
-        for j in range(i + k, n - k):
-            for q in range(j + k, n):
-                current_sum = numbers[i] + numbers[j] + numbers[q]
-                if current_sum < min_sum:
-                    min_sum = current_sum
-                    final_nums = [numbers[i], numbers[j], numbers[q]]
-    return final_nums
+        min_sum1 = min(min_sum1, nums[i])
+        min_sum1_2 = min(min_sum1_2, min_sum1 + nums[i + k])
+        min_sum1_2_3 = min(min_sum1_2_3, min_sum1_2 + nums[i + 2*k])
+    return min_sum1_2_3
 
 
 # numbers1 = [5, 8, 2, 10, 15, 3, 7]
@@ -39,18 +35,20 @@ def findMinSumOf3Nums(n, k, numbers):
 # numbers2 = [15, 14, 20, 23, 21, 10]
 # k2 = 2
 # result = findMinSumOf3Nums(len(numbers1), k1, numbers1)
-# print(f"\nТри числа с минимальной суммой: {result}\nСумма: {sum(result)}")
+# print(f"\nСумма: {result}")
+# result = findMinSumOf3Nums(len(numbers2), k2, numbers2)
+# print(f"\nСумма: {result}")
 
 with open("27-165a.txt") as fileA:
     nk = fileA.readline().split()
     nk = [int(i) for i in nk]
-    nums = [int(num) for num in fileA.readlines()]
-    result = findMinSumOf3Nums(nk[0], nk[1], nums)
-    print(f"\nТри числа с минимальной суммой: {result}\nСумма: {sum(result)}")
+    numbers = [int(num) for num in fileA.readlines()]
+    result = findMinSumOf3Nums(nk[0], nk[1], numbers)
+    print(f"\nСумма: {result}")
 
 with open("27-165b.txt") as fileB:
     nk = fileB.readline().split()
     nk = [int(i) for i in nk]
-    nums = [int(num) for num in fileB.readlines()]
-    result = findMinSumOf3Nums(nk[0], nk[1], nums)
-    print(f"\nТри числа с минимальной суммой: {result}\nСумма: {sum(result)}")
+    numbers = [int(num) for num in fileB.readlines()]
+    result = findMinSumOf3Nums(nk[0], nk[1], numbers)
+    print(f"\nСумма: {result}")
